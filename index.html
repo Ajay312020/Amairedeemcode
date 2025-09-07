@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMAI REDEEM CODE</title>
+    <style>
+        /* --- GLOBAL STYLES & SETUP --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #7b2cbf;
+            --secondary-color: #c77dff;
+            --accent-color: #e0aaff;
+            --light-color: #f7e9ff;
+            --dark-color: #5a189a;
+            --text-color: #333;
+            --white-color: #fff;
+            --success-color: #4CAF50;
+            --danger-color: #F44336;
+            --font-family: 'Poppins', sans-serif;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --transition-smooth: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--light-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background-color: var(--white-color);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            transform: translateX(20px);
+            overflow-y: auto;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        
+        /* --- UI COMPONENTS --- */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-color);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .header .back-btn {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px;
+        }
+        
+        .header h1 {
+            text-align: center;
+            width: 100%;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .diamond-balance {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-color);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .diamond-balance .diamond-icon {
+            color: #ffc107;
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .profile-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .banner-ad {
+            /* BANNER AD PLACEHOLDER */
+            padding: 10px;
+            text-align: center;
+            background-color: #f0f0f0;
+            color: #999;
+            font-size: 0.8rem;
+            margin-top: auto;
+            border-radius: var(--border-radius);
+        }
+
+        /* --- LOADING SCREEN --- */
+        #loading-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        #loading-page h1 {
+            color: var(--white-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .loading-bar-container {
+            width: 80%;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #loading-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--white-color);
+            border-radius: 10px;
+            transition: width 0.1s linear;
+        }
+
+        #loading-percent {
+            color: var(--white-color);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #login-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        #login-page h1 {
+            text-align: center;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+        }
+
+        /* --- DASHBOARD SCREEN --- */
+        #dashboard-page .page-content {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 70px); /* Adjust based on header height */
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .game-card {
+            background: var(--white-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-card h3 {
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .game-card p {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+            min-height: 2.4em; /* 2 lines */
+        }
+
+        .game-card .plays-left {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 15px;
+        }
+        
+        .game-card .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+        }
+        
+        .total-plays-left {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* --- PROFILE PAGE --- */
+        .profile-info, .redeem-section, .history-section {
+            background-color: var(--white-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+        
+        .profile-info p {
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+        
+        .profile-info strong {
+            color: var(--dark-color);
+        }
+
+        /* --- REDEEM PAGE & HISTORY --- */
+        .redeem-options .redeem-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+        
+        .redeem-card img { width: 40px; margin-right: 15px; }
+        
+        .redeem-card .info { flex-grow: 1; }
+        .redeem-card .info strong { font-size: 1.1rem; color: var(--dark-color); }
+        .redeem-card .info span { display: block; font-size: 0.9rem; color: #777; }
+        
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        .history-item:last-child { border-bottom: none; }
+        .history-item .status-pending { color: #f59e0b; }
+        .history-item .status-approved { color: var(--success-color); }
+        .history-item .copy-code {
+            float: right;
+            background-color: var(--light-color);
+            border: none;
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* --- GAME PAGES --- */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+        
+        /* Number Match Game */
+        #number-match-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 320px;
+        }
+        
+        .card {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white-color);
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        .card.flipped, .card.matched {
+            background-color: var(--accent-color);
+            transform: rotateY(180deg);
+        }
+        .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Color Match Game */
+        #color-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        #color-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+        .color-option {
+            height: 100px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+
+        /* Photo Match Game */
+        #photo-match-preview {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            background-color: #ccc;
+            border-radius: var(--border-radius);
+        }
+        #photo-match-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .photo-option {
+            width: 120px;
+            height: 120px;
+            background-color: #eee;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        /* MCQ Puzzle Game */
+        #mcq-question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        #mcq-options .btn {
+            margin-bottom: 10px;
+        }
+
+        /* --- AD SCREENS & MODALS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            transform: scale(0.9);
+            transition: var(--transition-smooth);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content .countdown-timer {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+        
+        .modal-content .confetti {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 16px;
+            background: #f00;
+            top: -20px;
+            opacity: 0;
+            animation: confetti-fall 3s linear infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
+        }
+
+        /* Watch Ads Page */
+        #watch-ads-page .progress-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+
+    </style>
+
+    <script src='//libtl.com/sdk.js' data-zone='9835962' data-sdk='show_9835962'></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+</head>
+<body>
+
+    <div class="app-container">
+        <div id="loading-page" class="page active">
+            <h1>AMAI REDEEM CODE</h1>
+            <div class="loading-bar-container">
+                <div id="loading-bar"></div>
+            </div>
+            <p id="loading-percent">0%</p>
+        </div>
+
+        <div id="login-page" class="page">
+            <h1>Welcome Back!</h1>
+            <form id="login-form">
+                <div class="input-group">
+                    <input type="text" id="name-input" placeholder="Enter your name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email-input" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <div id="dashboard-page" class="page">
+            <div class="header">
+                <div id="dashboard-diamond-balance" class="diamond-balance">
+                    <span class="diamond-icon">♦</span> <span class="balance-amount">0</span>
+                </div>
+                <div id="dashboard-profile-btn" class="profile-btn">👤</div>
+            </div>
+            <div class="page-content">
+                <p class="total-plays-left">Total plays left today: <span id="total-plays-counter">0</span>/13</p>
+                <div class="games-grid">
+                    </div>
+                <button id="watch-ads-btn" class="btn btn-secondary">Watch Ads and Earn More</button>
+                <div class="banner-ad">BANNER AD — PLACEHOLDER</div>
+            </div>
+        </div>
+        
+        <div id="profile-page" class="page">
+            <div class="header">
+                <div class="back-btn">←</div>
+                <h1>Profile</h1>
+            </div>
+            <div class="profile-info">
+                <p><strong>Name:</strong> <span id="profile-name"></span></p>
+                <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                <p><strong>Balance:</strong> <span id="profile-diamond-balance" class="diamond-balance" style="display: inline-flex;"><span class="diamond-icon">♦</span> <span class="balance-amount">0</span></span></p>
+            </div>
+            <div class="redeem-section">
+                <button id="go-to-redeem-btn" class="btn btn-primary">Redeem Diamonds</button>
+            </div>
+             <div class="history-section">
+                <h2>Redeem History</h2>
+                <div id="redeem-history-list">
+                    <p>No history yet.</p>
+                </div>
+            </div>
+            <button id="logout-btn" class="btn btn-secondary" style="margin-top: 20px; background-color: #ffcdd2; color: #c62828;">Logout</button>
+        </div>
+        
+        <div id="redeem-page" class="page">
+            <div class="header">
+                <div class="back-btn">←</div>
+                <h1>Redeem</h1>
+            </div>
+            <div class="redeem-options">
+                </div>
+        </div>
+
+        <div id="watch-ads-page" class="page">
+            <div class="header">
+                <div class="back-btn">←</div>
+                <h1>Watch Ads</h1>
+            </div>
+            <div class="game-container">
+                <p class="progress-text">Ad <span id="current-ad-count">1</span> of 12</p>
+                <p>Earn 10 diamonds per ad!</p>
+                <br>
+                <button id="play-short-ad-btn" class="btn btn-primary">Click to Play Ad</button>
+            </div>
+        </div>
+        
+        <div id="game-page" class="page">
+             <div class="header">
+                <div class="back-btn">←</div>
+                <h1 id="game-title">Game</h1>
+            </div>
+            <div id="game-area" class="game-container">
+                </div>
+            <div class="banner-ad">BANNER AD — PLACEHOLDER</div>
+        </div>
+
+    </div>
+    
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="confetti"></div>
+            <h2 id="modal-title">Title</h2>
+            <p id="modal-text">Some text here...</p>
+            <div id="modal-countdown" class="countdown-timer" style="display: none;">8</div>
+            <button id="modal-action-btn" class="btn btn-primary" style="display:none;">Action</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- STATE MANAGEMENT ---
+            let state = {
+                userProfile: null,
+                diamonds: 0,
+                playCounters: null,
+                redeemHistory: [],
+                currentPage: 'loading-page',
+                previousPage: null,
+            };
+
+            const MAX_TOTAL_PLAYS = 13;
+            const MAX_PLAYS_PER_GAME = 15; // Can be changed easily
+
+            const GAMES = {
+                'numberMatch': { title: 'Number Match', description: 'Find all the matching pairs.' },
+                'colorMatch': { title: 'Color Match', description: 'Pick the correct color swatch.' },
+                'photoMatch': { title: 'Photo Match', description: 'Remember and find the image.' },
+                'mcqPuzzle': { title: 'MCQ Puzzle', description: 'Test your trivia knowledge.' }
+            };
+
+            const REDEEM_OPTIONS = [
+                { diamonds: 1230, amount: 10, currency: '₹' },
+                { diamonds: 2400, amount: 20, currency: '₹' },
+                { diamonds: 4800, amount: 40, currency: '₹' },
+            ];
+            
+            // --- DOM ELEMENTS ---
+            const pages = document.querySelectorAll('.page');
+            const modal = document.getElementById('modal');
+            const adZoneId = document.querySelector('script[data-zone]').dataset.zone;
+
+            // --- INITIALIZATION ---
+            function appInit() {
+                // 1. Simulate Loading
+                let percent = 0;
+                const loadingBar = document.getElementById('loading-bar');
+                const loadingPercent = document.getElementById('loading-percent');
+                const interval = setInterval(() => {
+                    percent++;
+                    loadingBar.style.width = percent + '%';
+                    loadingPercent.textContent = percent + '%';
+                    if (percent >= 100) {
+                        clearInterval(interval);
+                        // 2. After loading, check state
+                        setTimeout(initializeAppState, 300);
+                    }
+                }, 20);
+            }
+
+            async function initializeAppState() {
+                initFirebaseAuth();
+                // Check if user is logged in via Firebase Auth
+                firebase.auth().onAuthStateChanged(async (user) => {
+                    if (user) {
+                        // User is signed in, fetch their data
+                        const userData = await fetchUserFromFirebase(user.email);
+                        if (userData) {
+                            state.userProfile = userData.userProfile;
+                            state.diamonds = userData.diamonds;
+                            state.playCounters = userData.playCounters;
+                            state.redeemHistory = userData.redeemHistory;
+                        } else {
+                            // First-time login via Firebase
+                            state.userProfile = { name: user.displayName, email: user.email };
+                            state.diamonds = 0;
+                            state.redeemHistory = [];
+                        }
+                        handleDailyReset();
+                        updateUI();
+                        openPage('dashboard-page');
+                    } else {
+                        // No user is signed in
+                        openPage('login-page');
+                    }
+                });
+            }
+            
+            function handleDailyReset() {
+                const today = new Date().toISOString().split('T')[0];
+                if (!state.playCounters || state.playCounters.date !== today) {
+                    state.playCounters = {
+                        date: today,
+                        totalPlays: 0,
+                        gamePlays: {
+                            numberMatch: 0,
+                            colorMatch: 0,
+                            photoMatch: 0,
+                            mcqPuzzle: 0,
+                        }
+                    };
+                }
+                saveStateToStorage();
+            }
+
+            // --- NAVIGATION ---
+            function openPage(pageId, context = null) {
+                if (state.currentPage === pageId) return;
+                
+                state.previousPage = state.currentPage;
+                state.currentPage = pageId;
+
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                const newPage = document.getElementById(pageId);
+                if (newPage) {
+                    newPage.classList.add('active');
+                }
+                
+                // Attach context if needed, e.g., for games
+                if (context && pageId === 'game-page') {
+                    initGame(context.gameId);
+                } else if (pageId === 'watch-ads-page') {
+                    initWatchAds();
+                } else if (pageId === 'redeem-page') {
+                    renderRedeemOptions();
+                } else if (pageId === 'profile-page') {
+                    renderProfilePage();
+                }
+            }
+
+            document.querySelectorAll('.back-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Simple back logic, can be improved with a history stack
+                    if(state.currentPage === 'game-page' || state.currentPage === 'watch-ads-page' || state.currentPage === 'redeem-page') {
+                        openPage('dashboard-page');
+                    } else if (state.currentPage === 'profile-page') {
+                         openPage('dashboard-page');
+                    } else if (state.previousPage) {
+                        openPage(state.previousPage);
+                    } else {
+                        openPage('dashboard-page');
+                    }
+                });
+            });
+
+            // --- UI RENDERING ---
+            function updateUI() {
+                if (!state.userProfile) return;
+                // Update all diamond balances
+                document.querySelectorAll('.balance-amount').forEach(el => el.textContent = state.diamonds);
+                
+                // Update dashboard play counters
+                if (document.getElementById('dashboard-page').classList.contains('active')) {
+                    document.getElementById('total-plays-counter').textContent = state.playCounters.totalPlays;
+                    renderGameCards();
+                }
+            }
+            
+            function renderGameCards() {
+                const grid = document.querySelector('.games-grid');
+                grid.innerHTML = '';
+                for (const gameId in GAMES) {
+                    const game = GAMES[gameId];
+                    const playsLeftForGame = MAX_PLAYS_PER_GAME - (state.playCounters.gamePlays[gameId] || 0);
+                    const totalPlaysLeft = MAX_TOTAL_PLAYS - state.playCounters.totalPlays;
+                    const canPlay = playsLeftForGame > 0 && totalPlaysLeft > 0;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    card.innerHTML = `
+                        <h3>${game.title}</h3>
+                        <p>${game.description}</p>
+                        <div class="plays-left">Plays left: ${playsLeftForGame}/${MAX_PLAYS_PER_GAME}</div>
+                        <button class="btn btn-primary btn-small play-btn" data-game-id="${gameId}" ${!canPlay ? 'disabled' : ''}>
+                            ${canPlay ? 'Play' : 'No Plays'}
+                        </button>
+                        <button class="hint-btn" data-game-id="${gameId}">Hint</button>
+                    `;
+                    grid.appendChild(card);
+                }
+            }
+            
+            function renderProfilePage() {
+                document.getElementById('profile-name').textContent = state.userProfile.name;
+                document.getElementById('profile-email').textContent = state.userProfile.email;
+                renderRedeemHistory();
+            }
+            
+            function renderRedeemOptions() {
+                const container = document.querySelector('#redeem-page .redeem-options');
+                container.innerHTML = '';
+                REDEEM_OPTIONS.forEach(option => {
+                    const canRedeem = state.diamonds >= option.diamonds;
+                    container.innerHTML += `
+                        <div class="redeem-card">
+                           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgd2lkdGg9IjQ4cHgiIGhlaWdodD0iNDhweCI+PHBhdGggZmlsbD0iIzE1NjVjMCIgZD0iTTkuOTYyLDkuNzUxbDEzLjY1NSwxMy42MDNsMCwwbDEzLjk4OC0xMy45ODhjMC44NTctMC44NTcsMi4yNDctMC44NTcsMy4xMDQsMGwwLDBjMC44NTcsMC44NTcsMC44NTcsMi4yNDcsMCwzLjEwNGwtMTUuNDcsMTUuNDdjLTAuNDQ0LDAuNDQ0LTEuMDY1LDAuNjY3LTEuNjgyLDAuNjY3Yy0wLjYxNiwwLTEuMjM3LTAuMjIzLTEuNjgyLTAuNjY3TDYuODYxLDEyLjg1MWMtMC44NTgtMC44NTgtMC44NTgtMi4yNDcsMC0zLjEwNGwwLDBDOS4xMDUsOC44OTQsOS45NjIsOS43NTFsMCwwQzkuMTA1LDguODk0LDguMjQ5LDguODk0LDkuOTYyLDkuNzUxeiIvPjxwYXRoIGZpbGw9IiMxZTg4ZTIiIGQ9Ik0zOC4wMzgsMzguMjQ5TDkuOTYyLDkuNzUxbDEuMzA4LTEuMzA4bDI4LjA3NywyOC4wNzdMMzguMDM4LDM4LjI0OXoiLz48cGF0aCBmaWxsPSIjNDNhZjUyIiBkPSJNMzkuNDI3LDM2Ljg2MWwtMTUuNDcxLTE1LjQ3MWMtMC40NDQtMC40NDQtMS4wNjYtMC42NjctMS42ODItMC42NjdjLTAuNjE2LDAtMS4yMzcsMC4yMjMtMS42ODIsMC42NjdMNi44NjEsMzUuNTc3Yy0wLjg1OCwwLjg1OC0wLjg1OCwyLjI0NywwLDMuMTA0bDAsMEM3LjcxOCwzOS41MzgsOC4yNSwzOS45MjIsOC44MDgsMzkuOTIyYzAuNTU4LDAsMS4wOS0wLjM4NCwxLjE1NC0wLjM4NGwxMy42NTUtMTMuNjAzbDEzLjk4OCwxMy45ODhjMC44NTcsMC44NTcsMi4yNDcsMC44NTcsMy4xMDQsMGwwLDBjMC44NTctMC44NTcsMC44NTctMi4yNDcsMC0zLjEwNEwzOS40MjcsMzYuODYxeiIvPjwvc3ZnPg==" alt="Gift Card">
+                            <div class="info">
+                                <strong>${option.currency}${option.amount} Gift Card</strong>
+                                <span><span class="diamond-icon">♦</span> ${option.diamonds}</span>
+                            </div>
+                            <button class="btn btn-secondary btn-small redeem-btn" data-diamonds="${option.diamonds}" data-amount="${option.amount}" ${!canRedeem ? 'disabled' : ''}>
+                                ${canRedeem ? 'Redeem' : 'Not Enough'}
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+
+            function renderRedeemHistory() {
+                const list = document.getElementById('redeem-history-list');
+                const debitHistory = state.redeemHistory.filter(item => item.type === 'debit');
+                
+                if (debitHistory.length === 0) {
+                    list.innerHTML = `<p>No history yet.</p>`;
+                    return;
+                }
+                list.innerHTML = debitHistory.map(item => `
+                    <div class="history-item">
+                        <span>${new Date(item.timestamp).toLocaleDateString()} - ₹${item.amount} (${item.status})</span>
+                        ${item.code ? `<button class="copy-code" data-code="${item.code}">Copy</button>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            // --- USER & AUTH ---
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name-input').value.trim();
+                const email = document.getElementById('email-input').value.trim();
+                if (name && email) {
+                    try {
+                        const { user } = await firebase.auth().signInAnonymously();
+                        // Link a new email/password account if user hasn't signed up
+                        const credentials = await firebase.auth().fetchSignInMethodsForEmail(email);
+                        if (credentials.length === 0) {
+                            await firebase.auth().createUserWithEmailAndPassword(email, 'temp_password'); // Use a more secure approach in a real app
+                        }
+                        
+                        await firebase.auth().currentUser.updateProfile({ displayName: name });
+                        
+                        state.userProfile = { name, email };
+                        state.diamonds = 0;
+                        handleDailyReset();
+                        saveStateToStorage();
+                        updateUI();
+                        openPage('dashboard-page');
+                    } catch (error) {
+                        console.error('Login/Sign up failed:', error);
+                        alert('Login failed: ' + error.message);
+                    }
+                }
+            });
+
+            document.getElementById('logout-btn').addEventListener('click', async () => {
+                try {
+                    await firebase.auth().signOut();
+                    state.userProfile = null;
+                    state.diamonds = 0;
+                    state.playCounters = null;
+                    state.redeemHistory = [];
+                    // Clear local storage on logout for a clean slate
+                    localStorage.clear();
+                    openPage('login-page');
+                } catch (error) {
+                    console.error('Logout failed:', error);
+                }
+            });
+            
+            document.getElementById('dashboard-profile-btn').addEventListener('click', () => openPage('profile-page'));
+
+            // --- CURRENCY & REDEEM ---
+            function awardDiamonds(amount, type = 'game_reward') {
+                state.diamonds += amount;
+                state.redeemHistory.push({
+                    type: 'credit',
+                    source: type,
+                    diamonds: amount,
+                    timestamp: Date.now()
+                });
+                updateUI();
+                saveStateToStorage();
+            }
+
+            document.getElementById('go-to-redeem-btn').addEventListener('click', () => openPage('redeem-page'));
+            
+            document.querySelector('#redeem-page .redeem-options').addEventListener('click', (e) => {
+                if (e.target.classList.contains('redeem-btn')) {
+                    const diamondsNeeded = Number(e.target.dataset.diamonds);
+                    const amount = Number(e.target.dataset.amount);
+                    if (state.diamonds >= diamondsNeeded) {
+                        state.diamonds -= diamondsNeeded;
+                        const request = {
+                            id: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            type: 'debit',
+                            amount: amount,
+                            diamonds: diamondsNeeded,
+                            status: 'pending',
+                            timestamp: Date.now(),
+                            code: null
+                        };
+                        state.redeemHistory.push(request);
+                        pushRedeemRequestToFirebase(request);
+                        saveStateToStorage();
+                        updateUI();
+                        showModal('Request Accepted', 'Your redeem code will appear in History within 3 hours.', null, true);
+                        renderRedeemOptions(); // Re-render to update button states
+                    }
+                }
+            });
+            
+            // --- MODALS & ADS ---
+            function showModal(title, text, buttonConfig = null, autoClose = false) {
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-text').innerHTML = text;
+                const btn = document.getElementById('modal-action-btn');
+                
+                // Hide elements by default
+                document.querySelector('.confetti').innerHTML = '';
+                document.getElementById('modal-countdown').style.display = 'none';
+                btn.style.display = 'none';
+
+                if (buttonConfig) {
+                    btn.textContent = buttonConfig.text;
+                    btn.onclick = buttonConfig.onClick;
+                    btn.style.display = 'block';
+                }
+                modal.classList.add('active');
+                if (autoClose) {
+                    setTimeout(() => modal.classList.remove('active'), 3000);
+                }
+            }
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    // Don't close modals that require interaction
+                    // modal.classList.remove('active');
+                }
+            });
+            
+            // Replaced with actual ad network calls
+            function showRewardAd(callback) {
+                showModal('Watching Ad', 'Please wait for the reward...', null);
+                if (typeof libtl !== 'undefined' && libtl.showAd) {
+                    libtl.showAd(adZoneId, () => {
+                        modal.classList.remove('active');
+                        startRewardCountdown(callback);
+                    });
+                } else {
+                    console.error('Ad SDK not loaded correctly.');
+                    modal.classList.remove('active');
+                    startRewardCountdown(callback); // Fallback for testing
+                }
+            }
+
+            function playShortAd(callback) {
+                showModal('Watching Ad', 'Please wait for the reward...', null);
+                if (typeof libtl !== 'undefined' && libtl.showAd) {
+                    libtl.showAd(adZoneId, () => {
+                        modal.classList.remove('active');
+                        startRewardCountdown(callback);
+                    });
+                } else {
+                    console.error('Ad SDK not loaded correctly.');
+                    modal.classList.remove('active');
+                    startRewardCountdown(callback); // Fallback for testing
+                }
+            }
+            
+            function startRewardCountdown(onCompleteCallback) {
+                let seconds = 8;
+                showModal('Reward Pending', `You will receive your reward in...`, null);
+                const countdownEl = document.getElementById('modal-countdown');
+                countdownEl.textContent = seconds;
+                countdownEl.style.display = 'block';
+                
+                const interval = setInterval(() => {
+                    seconds--;
+                    countdownEl.textContent = seconds;
+                    if (seconds <= 0) {
+                        clearInterval(interval);
+                        modal.classList.remove('active');
+                        onCompleteCallback();
+                    }
+                }, 1000);
+            }
+            
+            function triggerConfetti() {
+                const container = document.querySelector('.confetti');
+                container.innerHTML = '';
+                const colors = ['#e0aaff', '#c77dff', '#7b2cbf', '#f7e9ff'];
+                for(let i=0; i<50; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    piece.style.left = Math.random() * 100 + '%';
+                    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.animationDelay = Math.random() * 3 + 's';
+                    container.appendChild(piece);
+                }
+            }
+            
+            // --- GAME FLOWS ---
+            document.querySelector('.games-grid').addEventListener('click', (e) => {
+                if (e.target.classList.contains('play-btn')) {
+                    const gameId = e.target.dataset.gameId;
+                    if (state.playCounters.totalPlays < MAX_TOTAL_PLAYS && state.playCounters.gamePlays[gameId] < MAX_PLAYS_PER_GAME) {
+                         openPage('game-page', { gameId });
+                    }
+                } else if (e.target.classList.contains('hint-btn')) {
+                    alert(`Hint for ${GAMES[e.target.dataset.gameId].title}: Try your best!`);
+                }
+            });
+
+            function onGameComplete(win) {
+                // 1. Update counters
+                state.playCounters.totalPlays++;
+                // Assuming current game context is stored, e.g., in a global var
+                state.playCounters.gamePlays[currentGameId]++;
+                saveStateToStorage();
+
+                // 2. Show result & ad
+                showModal(win ? 'You Won!' : 'Try Again!', 'Watch an ad to claim your reward.', null);
+                if (win) triggerConfetti();
+
+                setTimeout(() => {
+                    showRewardAd(() => {
+                        awardDiamonds(9, 'game_reward');
+                        showModal('Reward!', 'You earned <span class="diamond-icon">♦</span> 9 diamonds!', {
+                            text: 'Back to Games',
+                            onClick: () => {
+                                modal.classList.remove('active');
+                                openPage('dashboard-page');
+                                updateUI();
+                            }
+                        });
+                    });
+                }, 1500);
+            }
+            
+            // --- WATCH ADS FLOW ---
+            let currentAdWatchCount = 0;
+            const TOTAL_ADS_TO_WATCH = 12;
+
+            document.getElementById('watch-ads-btn').addEventListener('click', () => {
+                openPage('watch-ads-page');
+            });
+            
+            function initWatchAds() {
+                currentAdWatchCount = 0;
+                document.getElementById('current-ad-count').textContent = currentAdWatchCount + 1;
+                document.getElementById('play-short-ad-btn').disabled = false;
+            }
+
+            document.getElementById('play-short-ad-btn').addEventListener('click', (e) => {
+                e.target.disabled = true;
+                playShortAd(() => {
+                    awardDiamonds(10, 'watch_ad_reward');
+                    currentAdWatchCount++;
+                    if (currentAdWatchCount >= TOTAL_ADS_TO_WATCH) {
+                        showModal('All Ads Watched!', `You earned a total of ${10 * TOTAL_ADS_TO_WATCH} diamonds.`, {
+                           text: 'Back to Dashboard',
+                           onClick: () => {
+                               modal.classList.remove('active');
+                               openPage('dashboard-page');
+                           }
+                        });
+                    } else {
+                        document.getElementById('current-ad-count').textContent = currentAdWatchCount + 1;
+                        e.target.disabled = false;
+                        showModal('Success!', 'You earned <span class="diamond-icon">♦</span> 10 diamonds!', null, true);
+                    }
+                    updateUI();
+                });
+            });
+
+            // =================================================================
+            // --- GAME IMPLEMENTATIONS ---
+            // =================================================================
+            let currentGameId = null;
+            const gameArea = document.getElementById('game-area');
+
+            function initGame(gameId) {
+                currentGameId = gameId;
+                document.getElementById('game-title').textContent = GAMES[gameId].title;
+                gameArea.innerHTML = ''; // Clear previous game
+                
+                switch (gameId) {
+                    case 'numberMatch':
+                        initNumberMatch();
+                        break;
+                    case 'colorMatch':
+                        initColorMatch();
+                        break;
+                    case 'photoMatch':
+                        initPhotoMatch();
+                        break;
+                    case 'mcqPuzzle':
+                        initMcqPuzzle();
+                        break;
+                }
+            }
+
+            // --- 1. Number Match ---
+            function initNumberMatch() {
+                const numbers = ['1', '2', '3', '4', '5', '6', '1', '2', '3', '4', '5', '6'].sort(() => 0.5 - Math.random());
+                let flippedCards = [];
+                let matchedPairs = 0;
+                
+                const grid = document.createElement('div');
+                grid.id = 'number-match-grid';
+
+                numbers.forEach((num, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.dataset.value = num;
+                    card.innerHTML = `<div class="card-inner">${num}</div>`;
+                    card.addEventListener('click', () => {
+                        if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                            card.classList.add('flipped');
+                            flippedCards.push(card);
+                            if (flippedCards.length === 2) {
+                                setTimeout(checkMatch, 1000);
+                            }
+                        }
+                    });
+                    grid.appendChild(card);
+                });
+                gameArea.appendChild(grid);
+
+                function checkMatch() {
+                    const [card1, card2] = flippedCards;
+                    if (card1.dataset.value === card2.dataset.value) {
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        matchedPairs++;
+                        if (matchedPairs === numbers.length / 2) {
+                            onGameComplete(true);
+                        }
+                    } else {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                    }
+                    flippedCards = [];
+                }
+            }
+            
+            // --- 2. Color Match ---
+            function initColorMatch() {
+                const colors = { 'Red': '#F44336', 'Blue': '#2196F3', 'Green': '#4CAF50', 'Yellow': '#FFEB3B', 'Purple': '#9C27B0', 'Orange': '#FF9800' };
+                const colorNames = Object.keys(colors);
+                const targetColorName = colorNames[Math.floor(Math.random() * colorNames.length)];
+                
+                let options = [colors[targetColorName]];
+                while (options.length < 4) {
+                    const randomColor = colors[colorNames[Math.floor(Math.random() * colorNames.length)]];
+                    if (!options.includes(randomColor)) {
+                        options.push(randomColor);
+                    }
+                }
+                options.sort(() => 0.5 - Math.random());
+
+                gameArea.innerHTML = `
+                    <p>Tap the color that matches:</p>
+                    <h2 id="color-display" style="color: ${colors[targetColorName]}">${targetColorName}</h2>
+                    <div id="color-options"></div>
+                `;
+                
+                const optionsContainer = document.getElementById('color-options');
+                options.forEach(color => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'color-option';
+                    optionDiv.style.backgroundColor = color;
+                    optionDiv.addEventListener('click', () => {
+                        onGameComplete(color === colors[targetColorName]);
+                    });
+                    optionsContainer.appendChild(optionDiv);
+                });
+            }
+
+            // --- 3. Photo Match (using colored squares) ---
+            function initPhotoMatch() {
+                const photos = ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'];
+                const targetPhoto = photos[Math.floor(Math.random() * photos.length)];
+                let options = [targetPhoto];
+                while(options.length < 4) {
+                    const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+                    if(!options.includes(randomPhoto)) options.push(randomPhoto);
+                }
+                options.sort(() => 0.5 - Math.random());
+                
+                gameArea.innerHTML = `
+                    <p id="photo-match-instruction">Memorize this!</p>
+                    <div id="photo-match-preview"></div>
+                    <div id="photo-match-options" style="display: none;"></div>
+                `;
+
+                const preview = document.getElementById('photo-match-preview');
+                preview.style.backgroundColor = targetPhoto;
+                
+                setTimeout(() => {
+                    preview.style.display = 'none';
+                    document.getElementById('photo-match-instruction').textContent = 'Which one did you see?';
+                    const optionsContainer = document.getElementById('photo-match-options');
+                    optionsContainer.style.display = 'grid';
+                    options.forEach(photo => {
+                        const optionDiv = document.createElement('div');
+                        optionDiv.className = 'photo-option';
+                        optionDiv.style.backgroundColor = photo;
+                        optionDiv.addEventListener('click', () => onGameComplete(photo === targetPhoto));
+                        optionsContainer.appendChild(optionDiv);
+                    });
+                }, 3000); // Show for 3 seconds
+            }
+
+            // --- 4. MCQ Puzzle ---
+            function initMcqPuzzle() {
+                const puzzles = [
+                    { q: 'What is 2 + 2?', o: ['3', '4', '5'], a: '4' },
+                    { q: 'Which planet is known as the Red Planet?', o: ['Earth', 'Mars', 'Jupiter'], a: 'Mars' },
+                    { q: 'What is the capital of France?', o: ['London', 'Berlin', 'Paris'], a: 'Paris' },
+                ];
+                const currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+                
+                gameArea.innerHTML = `
+                    <p id="mcq-question">${currentPuzzle.q}</p>
+                    <div id="mcq-options"></div>
+                `;
+                const optionsContainer = document.getElementById('mcq-options');
+                currentPuzzle.o.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-secondary';
+                    btn.textContent = opt;
+                    btn.addEventListener('click', () => onGameComplete(opt === currentPuzzle.a));
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+
+            // =================================================================
+            // --- FIREBASE / BACKEND INTEGRATION ---
+            // =================================================================
+            const firebaseConfig = {
+                apiKey: "AIzaSyCZ3ULRenkv3bXhn_EkR4OtFgvGDL98hBM",
+                authDomain: "amairedeemcode.firebaseapp.com",
+                databaseURL: "https://amairedeemcode-default-rtdb.firebaseio.com",
+                projectId: "amairedeemcode",
+                storageBucket: "amairedeemcode.firebasestorage.app",
+                messagingSenderId: "764703161493",
+                appId: "1:764703161493:web:f5abc07551c4454c6eef9c"
+            };
+            
+            function initFirebaseAuth() {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+            }
+
+            async function fetchUserFromFirebase(email) {
+                try {
+                    const doc = await firebase.firestore().collection('users').doc(email).get();
+                    if (doc.exists) {
+                        return doc.data();
+                    }
+                    return null;
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    return null;
+                }
+            }
+
+            async function saveStateToStorage() {
+                if (!state.userProfile) return;
+                const userDocRef = firebase.firestore().collection('users').doc(state.userProfile.email);
+                const userObject = {
+                    userProfile: state.userProfile,
+                    diamonds: state.diamonds,
+                    playCounters: state.playCounters,
+                    redeemHistory: state.redeemHistory,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                try {
+                    await userDocRef.set(userObject, { merge: true });
+                    console.log("User data saved to Firebase.");
+                } catch (error) {
+                    console.error("Error saving user data:", error);
+                }
+            }
+            
+            async function pushRedeemRequestToFirebase(requestObject) {
+                try {
+                    await firebase.firestore().collection('redeem_requests').doc(requestObject.id).set(requestObject);
+                    console.log("Redeem request pushed to Firebase.");
+                } catch (error) {
+                    console.error("Error pushing redeem request:", error);
+                }
+            }
+
+            // --- KICK OFF THE APP ---
+            appInit();
+        });
+    </script>
+</body>
+</html>
